@@ -24,7 +24,7 @@ metalist=[]
 
 for z in doilist:
     res=requests.get(f'https://opencitations.net/index/coci/api/v1/citations/{z}')
-    metares=requests.get(f'https://opencitations.net/index/coci/api/v1/metadata{z}')
+    metares=requests.get(f'https://opencitations.net/index/coci/api/v1/metadata/{z}')
     datax = res.json()
     datam=metares.json()
     dlen=len(datax)
