@@ -53,6 +53,8 @@ G = nx.from_pandas_edgelist(df,'cited','citing')
 net=Network(height='1000px',width='100%',bgcolor='#222222',font_color='white')
 net.from_nx(G)
 net.save_graph('coci.html')
+import IPython
+IPython.display.HTML(filename='coci.html')
 
 #Tree
 from anytree import Node, RenderTree
