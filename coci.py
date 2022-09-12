@@ -18,9 +18,9 @@ for i in range (1, L+1):
 sum=sum+1 #total number of nodes [1+cn+cn^2+.....+cn^L] 
 
 doilist=[doi] #list of all DOIs in network
-dflist=[] #list of list of dictionaries, contains data of all DOIs in network
+dflist=[] #contains citation data of all DOIs in network
 lst = []
-metalist=[]
+metalist=[] # contains metadata of all DOIs in network
 
 for z in doilist:
     res=requests.get(f'https://opencitations.net/index/coci/api/v1/citations/{z}')
