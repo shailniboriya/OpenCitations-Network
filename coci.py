@@ -9,7 +9,7 @@ import requests
 import pandas as pd
 import math
 #user input
-doi=input("enter doi, ex- 10.1039/c8cs00324f : ")
+doi=input("enter doi, ex- 10.1021/ci500020m : ")
 cn=int(input("enter the number of citations to be used : "))
 L=int(input("enter the number of levels : "))
 sum = 0
