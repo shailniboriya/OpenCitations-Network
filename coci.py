@@ -20,10 +20,13 @@ sum=sum+1 #total number of nodes [1+cn+cn^2+.....+cn^L]
 doilist=[doi] #list of all DOIs in network
 dflist=[] #list of list of dictionaries, contains data of all DOIs in network
 lst = []
+metalist=[]
 
 for z in doilist:
     res=requests.get(f'https://opencitations.net/index/coci/api/v1/citations/{z}')
+    metares=requests.get(f'https://opencitations.net/index/coci/api/v1/metadata{z}')
     datax = res.json()
+    datam=metares.json()
     dlen=len(datax)
     if dlen>=cn:
         n=cn
@@ -31,6 +34,7 @@ for z in doilist:
         n=dlen
     datay=datax[0:n]
     dflist.append(datay)
+    metalist.append(datam)
     for j in range(n):
         data1x=datax[j]
         dfy=list(data1x.keys())
