@@ -3,7 +3,7 @@ Opencitations Network
 fetching citation data of a specific research paper using COCI REST API
 '''
 
-#import libraries
+
 import requests
 import pandas as pd
 
