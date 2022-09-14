@@ -3,18 +3,17 @@ Opencitations Network
 fetching citation data of a specific research paper using COCI REST API
 '''
 
-
 #import libraries
 import requests
 import pandas as pd
-import math
+
 #user input
 doi=input("enter doi, ex- 10.1021/ci500020m : ")
 cn=int(input("enter the number of citations to be used : "))
-L=int(input("enter the number of levels : "))
+l=int(input("enter the number of levels : "))
 sum = 0
-for i in range (1, L+1):
-  sum += (math.pow(cn, i))
+for i in range (1, l+1):
+  sum += cn**i
 sum=sum+1 #total number of nodes [1+cn+cn^2+.....+cn^L] 
 
 doilist=[doi] #list of all DOIs in network
@@ -71,11 +70,11 @@ def add_nodes(nodes, parent, child):
 
 data = df
 nodes = {}  # store references to created nodes 
-# data.apply(lambda x: add_nodes(nodes, x["Parent"], x["Child"]), axis=1)  # 1-liner
+
 for parent, child in zip(data["cited"],data["citing"]):
     add_nodes(nodes, parent, child)
 
 roots = list(data[~data["cited"].isin(data["citing"])]["cited"].unique())
-for root in roots:         # you can skip this for roots[0], if there is no forest and just 1 tree
+for root in roots:         #skip this for roots[0]
     for pre, _, node in RenderTree(nodes[root]):
         print("%s%s" % (pre, node.name))
