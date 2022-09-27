@@ -50,10 +50,10 @@ df = pd.DataFrame(lst, columns=dfy)
 
 import networkx as nx
 from pyvis.network import Network
+import IPython
 
 G = nx.from_pandas_edgelist(df,'cited','citing')
 net=Network(height='1000px',width='100%',bgcolor='#222222',font_color='white',directed='True') #add layout = 'True' for heirarchical tree layout
 net.from_nx(G)
 net.save_graph('coci.html')
-import IPython
 IPython.display.HTML(filename='coci.html')
