@@ -54,9 +54,9 @@ net.from_nx(G)
 net.save_graph('coci.html')
 IPython.display.HTML(filename='coci.html')
 
-"""
+
 #extracting metadata of all the DOIs in the network for further data analysis
-import requests
+
 metalist=[] # contains metadata of all DOIs in network
 for k in doilist:
     metares=requests.get(f'https://opencitations.net/index/coci/api/v1/metadata/{k}')
@@ -64,9 +64,9 @@ for k in doilist:
     metalist.append(datam)
 
 #extracting urls of all the open access DOIs in the network
+
 from urlextract import URLExtract
 metastr=str(metalist)
 extractor = URLExtract()
 urls = extractor.find_urls(metastr)
     
-"""
