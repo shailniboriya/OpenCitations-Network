@@ -19,13 +19,10 @@ sum=sum+1 #total number of nodes [1+cn+cn^2+.....+cn^L]
 doilist=[doi] #list of all DOIs in network
 dflist=[] #contains citation data of all DOIs in network
 lst = []
-metalist=[] # contains metadata of all DOIs in network
 
 for z in doilist:
     res=requests.get(f'https://opencitations.net/index/coci/api/v1/citations/{z}')
-    metares=requests.get(f'https://opencitations.net/index/coci/api/v1/metadata/{z}')
     datax = res.json()
-    datam=metares.json()
     dlen=len(datax)
     if dlen>=cn:
         n=cn
@@ -33,7 +30,6 @@ for z in doilist:
         n=dlen
     datay=datax[0:n]
     dflist.append(datay)
-    metalist.append(datam)
     for j in range(n):
         data1x=datax[j]
         dfy=list(data1x.keys())
@@ -42,7 +38,7 @@ for z in doilist:
         lst.append(dfx)
         y=datf.loc[datf['key'] == 'citing', 'value'].iloc[0]
         doilist.append(y)
-    if sum==len(doilist):
+    if len(doilist)>=sum:
       break
 df = pd.DataFrame(lst, columns=dfy)
 
@@ -57,3 +53,19 @@ net=Network(height='1000px',width='100%',bgcolor='#222222',font_color='white',di
 net.from_nx(G)
 net.save_graph('coci.html')
 IPython.display.HTML(filename='coci.html')
+
+"""
+#extracting metadata of all the DOIs in the network and open access link from metadata
+
+import requests
+import re
+metalist=[] # contains metadata of all DOIs in network
+listurl=[] #contains url of open access DOIs in the network
+for k in doilist:
+    metares=requests.get(f'https://opencitations.net/index/coci/api/v1/metadata/{k}')
+    datam=metares.json()
+    metalist.append(datam)
+    metastr=str(datam)
+    listurl.append(re.search("(?P<url>https?://[^\s]+)", metastr).group("url"))
+    
+"""
