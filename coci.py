@@ -55,17 +55,18 @@ net.save_graph('coci.html')
 IPython.display.HTML(filename='coci.html')
 
 """
-#extracting metadata of all the DOIs in the network and open access link from metadata
-
+#extracting metadata of all the DOIs in the network for further data analysis
 import requests
-import re
 metalist=[] # contains metadata of all DOIs in network
-listurl=[] #contains url of open access DOIs in the network
 for k in doilist:
     metares=requests.get(f'https://opencitations.net/index/coci/api/v1/metadata/{k}')
     datam=metares.json()
     metalist.append(datam)
-    metastr=str(datam)
-    listurl.append(re.search("(?P<url>https?://[^\s]+)", metastr).group("url"))
+
+#extracting urls of all the open access DOIs in the network
+from urlextract import URLExtract
+metastr=str(metalist)
+extractor = URLExtract()
+urls = extractor.find_urls(metastr)
     
 """
