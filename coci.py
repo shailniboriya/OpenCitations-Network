@@ -9,27 +9,16 @@ import pandas as pd
 
 #user input
 doi=input("enter doi, ex- 10.1021/ci500020m : ")
-cn=int(input("enter the number of citations to be used : "))
-l=int(input("enter the number of levels : "))
-sum = 0
-for i in range (1, l+1):
-  sum += cn**i
-sum=sum+1 #total number of nodes [1+cn+cn^2+.....+cn^L] 
+
 
 doilist=[doi] #list of all DOIs in network
-dflist=[] #contains citation data of all DOIs in network
 lst = []
 
 for z in doilist:
     res=requests.get(f'https://opencitations.net/index/coci/api/v1/citations/{z}')
     datax = res.json()
     dlen=len(datax)
-    if dlen>=cn:
-        n=cn
-    else:
-        n=dlen
-    datay=datax[0:n]
-    dflist.append(datay)
+    n=dlen
     for j in range(n):
         data1x=datax[j]
         dfy=list(data1x.keys())
@@ -38,8 +27,7 @@ for z in doilist:
         lst.append(dfx)
         y=datf.loc[datf['key'] == 'citing', 'value'].iloc[0]
         doilist.append(y)
-    if len(doilist)>=sum:
-      break
+        
 df = pd.DataFrame(lst, columns=dfy)
 
 #Visualisation....................................
